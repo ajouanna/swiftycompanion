@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Welcome-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="swiftycompanion" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,13 +23,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter login that you want to search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grq-rR-1b5">
-                                <rect key="frame" x="63" y="179" width="266" height="21"/>
+                                <rect key="frame" x="63" y="237" width="266" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="42-logo" translatesAutoresizingMaskIntoConstraints="NO" id="FhJ-73-RTH">
+                                <rect key="frame" x="67" y="80" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ifT-Wv-s8l">
-                                <rect key="frame" x="75" y="251" width="237" height="30"/>
+                                <rect key="frame" x="75" y="309" width="237" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -41,10 +45,10 @@
                             <constraint firstItem="ifT-Wv-s8l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="59" id="Cpp-gU-f7R"/>
                             <constraint firstItem="grq-rR-1b5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="FQJ-7y-Un0"/>
                             <constraint firstItem="ifT-Wv-s8l" firstAttribute="top" secondItem="grq-rR-1b5" secondAttribute="bottom" constant="51" id="ZnP-cg-qm3"/>
-                            <constraint firstItem="grq-rR-1b5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="115" id="v2w-k6-Qco"/>
+                            <constraint firstItem="grq-rR-1b5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="173" id="v2w-k6-Qco"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="ctZ-kH-NcX">
+                    <navigationItem key="navigationItem" title="Welcome" id="ctZ-kH-NcX">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Jx6-W1-Rud">
                             <connections>
                                 <segue destination="I4n-q9-VzZ" kind="show" id="Epi-Vr-kZj"/>
@@ -93,4 +97,7 @@
             <point key="canvasLocation" x="117.59999999999999" y="122.78860569715144"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="42-logo" width="573" height="402"/>
+    </resources>
 </document>
