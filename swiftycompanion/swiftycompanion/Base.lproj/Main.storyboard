@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uw6-Ai-RIR">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uw6-Ai-RIR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,9 +28,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="42-logo" translatesAutoresizingMaskIntoConstraints="NO" id="FhJ-73-RTH">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="42-logo" translatesAutoresizingMaskIntoConstraints="NO" id="FhJ-73-RTH">
                                 <rect key="frame" x="67" y="80" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="CpB-97-wBu"/>
+                                </constraints>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="enter login" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ifT-Wv-s8l">
                                 <rect key="frame" x="75" y="309" width="237" height="30"/>
@@ -38,14 +40,29 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WdJ-RQ-Wx5">
+                                <rect key="frame" x="16" y="638" width="348" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="awf-Fp-aKj"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="ifT-Wv-s8l" secondAttribute="trailing" constant="47" id="9HB-xH-V0E"/>
-                            <constraint firstItem="ifT-Wv-s8l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="59" id="Cpp-gU-f7R"/>
-                            <constraint firstItem="grq-rR-1b5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="FQJ-7y-Un0"/>
-                            <constraint firstItem="ifT-Wv-s8l" firstAttribute="top" secondItem="grq-rR-1b5" secondAttribute="bottom" constant="51" id="ZnP-cg-qm3"/>
-                            <constraint firstItem="grq-rR-1b5" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="173" id="v2w-k6-Qco"/>
+                            <constraint firstItem="FhJ-73-RTH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2po-Mh-mco"/>
+                            <constraint firstItem="grq-rR-1b5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="6fa-8t-17H"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="WdJ-RQ-Wx5" secondAttribute="bottom" constant="8" symbolic="YES" id="B9G-Wj-AhI"/>
+                            <constraint firstItem="grq-rR-1b5" firstAttribute="top" secondItem="FhJ-73-RTH" secondAttribute="bottom" constant="29" id="Ixr-DL-HuR"/>
+                            <constraint firstItem="ifT-Wv-s8l" firstAttribute="top" secondItem="grq-rR-1b5" secondAttribute="bottom" constant="51" id="XZx-Fa-mHB"/>
+                            <constraint firstItem="FhJ-73-RTH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="16" id="abh-Lq-vnU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ifT-Wv-s8l" secondAttribute="trailing" constant="47" id="eQH-ED-6zr"/>
+                            <constraint firstItem="ifT-Wv-s8l" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="59" id="eqh-fK-6QC"/>
+                            <constraint firstItem="FhJ-73-RTH" firstAttribute="centerX" secondItem="WdJ-RQ-Wx5" secondAttribute="centerX" constant="-3" id="lJr-sP-ugS"/>
+                            <constraint firstItem="WdJ-RQ-Wx5" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="okX-0K-B2Y"/>
+                            <constraint firstItem="FhJ-73-RTH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="51" id="sFT-Bs-fPL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Welcome" id="ctZ-kH-NcX">
@@ -55,6 +72,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="errorLabel" destination="WdJ-RQ-Wx5" id="xgF-xv-QUA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
