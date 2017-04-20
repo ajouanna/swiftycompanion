@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var errorLabel: UILabel!
     
+    @IBOutlet weak var loginField: UITextField!
+    
     let consumerKey : String = "f833c3cb76771590d718ea287b618ad9557cf351761e6682ac8d3641a6553a3c"
     let consumerSecret : String = "618e7c8009abfe61ed61ca8b7856851c4f5e3a2c5aa3bdf71365adcbd68b78db"
     var token : String?
@@ -58,5 +60,14 @@ class ViewController: UIViewController {
         }
         task.resume()
     }
-}
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "detailsSegue" {
+            if let vc = segue.destination as? DetailsViewController {
+                vc.login = loginField.text!
+            }
+        }
+    }
+   
+
+}
