@@ -9,7 +9,8 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
-
+    
+    @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var imageField: UIImageView!
     @IBOutlet weak var loginField: UILabel!
     
@@ -25,27 +26,30 @@ class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         loginField.text = login
+        activity.hidesWhenStopped = true
+        activity.startAnimating()
+        
         getFrom42(login)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     func getFrom42(_ str : String) {
         print("getFrom42(\(str))")
@@ -65,9 +69,9 @@ class DetailsViewController: UIViewController {
                     print("Erreur sur requete web : \(err)")
                 } else if let d = data {
                     DispatchQueue.main.async {
-                    do {
-//                        if let responseObject = try JSONSerialization.jsonObject(with: d, options: []) as? [String:AnyObject],
-//                            let arrayStatuses = responseObject["statuses"] as? [[String:AnyObject]] {
+                        do {
+                            //                        if let responseObject = try JSONSerialization.jsonObject(with: d, options: []) as? [String:AnyObject],
+                            //                            let arrayStatuses = responseObject["statuses"] as? [[String:AnyObject]] {
                             if let responseObject = try JSONSerialization.jsonObject(with: d, options: []) as? [String:AnyObject] {
                                 print("responseObject: \(responseObject)")
                                 if let loginInMsg = responseObject["login"] as! String? {
@@ -93,7 +97,11 @@ class DetailsViewController: UIViewController {
                                 if let image_url = responseObject["image_url"] as! String? {
                                     let url = URL(string: image_url)
                                     let data = try Data(contentsOf: url!)
+                                    self.imageField.alpha = 0
                                     self.imageField.image = UIImage(data: data)
+                                    UIView.animate(withDuration: 1.0) {
+                                        self.imageField.alpha = 1
+                                    }
                                 }
                                 if let cursus_users = responseObject["cursus_users"] as! NSArray? {
                                     print("Debug : cursus_users = \(cursus_users)")
@@ -112,11 +120,11 @@ class DetailsViewController: UIViewController {
                                                     if let level = cur["level"] as! Float? {
                                                         print("level = \(level)")
                                                         self.progress.progress = (level - Float(Int(level)))
-                                                        self.levelField.text = "Level " + String(Int(level)) + " \(100 * self.progress.progress) %"
+                                                        self.levelField.text = "Level " + String(Int(level)) + " - \(Int(100 * self.progress.progress)) %"
                                                         break
                                                     }
                                                 }
- 
+                                                
                                             }
                                         }
                                     }
@@ -125,37 +133,37 @@ class DetailsViewController: UIViewController {
                                 }
                                 else {
                                     self.progress.progress = 0
-                                   self.levelField.text = "Level unknown"
+                                    self.levelField.text = "Level unknown"
                                 }
                                 
                                 /*
-                                for status in arrayStatuses {
-                                let text = status["text"] as! String
-                                let user = status["user"]?["name"]  as! String
-                                if let date = status["created_at"] as? String {
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "E MMM dd HH:mm:ss Z yyyy"
-                                    if let date = dateFormatter.date(from: date) {
-                                        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-                                        let newDate = dateFormatter.string(from: date)
-                                    }
-                                }
- 
-                                print(status)
+                                 for status in arrayStatuses {
+                                 let text = status["text"] as! String
+                                 let user = status["user"]?["name"]  as! String
+                                 if let date = status["created_at"] as? String {
+                                 let dateFormatter = DateFormatter()
+                                 dateFormatter.dateFormat = "E MMM dd HH:mm:ss Z yyyy"
+                                 if let date = dateFormatter.date(from: date) {
+                                 dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+                                 let newDate = dateFormatter.string(from: date)
+                                 }
+                                 }
+                                 
+                                 print(status)
+                                 }
+                                 */
                             }
- */
+                            // A FINIR
+                            
+                        } catch _{
+                            print("Connexion lost")
                         }
-                        print("Donnees recues de l'API")
-                        // A FINIR
-                        
-                    } catch _{
-                        print("Connexion lost")
-                    }
+                        self.activity.stopAnimating()
                     }
                 }
             })
             task.resume()
         }
     }
-
+    
 }
