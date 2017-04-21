@@ -17,6 +17,8 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var firstNameField: UILabel!
     @IBOutlet weak var lastNameField: UILabel!
     @IBOutlet weak var phoneField: UILabel!
+    @IBOutlet weak var progress: UIProgressView!
+    @IBOutlet weak var levelField: UILabel!
     
     var login = ""
     var loginVC : ViewController?
@@ -68,6 +70,14 @@ class DetailsViewController: UIViewController {
 //                            let arrayStatuses = responseObject["statuses"] as? [[String:AnyObject]] {
                             if let responseObject = try JSONSerialization.jsonObject(with: d, options: []) as? [String:AnyObject] {
                                 print("responseObject: \(responseObject)")
+                                if let loginInMsg = responseObject["login"] as! String? {
+                                    print("login trouvé : \(loginInMsg)")
+                                }
+                                else {
+                                    print("Erreur ! login non trouvé")
+                                    self.loginField.text = "Unknown user"
+                                }
+                                
                                 if let email = responseObject["email"] as! String? {
                                     self.emailField.text = email
                                 }
@@ -85,7 +95,38 @@ class DetailsViewController: UIViewController {
                                     let data = try Data(contentsOf: url!)
                                     self.imageField.image = UIImage(data: data)
                                 }
-                                
+                                if let cursus_users = responseObject["cursus_users"] as! NSArray? {
+                                    print("Debug : cursus_users = \(cursus_users)")
+                                    let now = Date();
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = ("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+                                    
+                                    for cursus in cursus_users {
+                                        print("cursus = \(cursus)")
+                                        if let cur = cursus as? [String:AnyObject] {
+                                            print("cur = \(cur)")
+                                            if let endDateStr = cur["end_at"] as? String {
+                                                print("date trouvée : \(endDateStr)")
+                                                let endDate = dateFormatter.date(from: endDateStr)
+                                                if endDate! >= now {
+                                                    if let level = cur["level"] as! Float? {
+                                                        print("level = \(level)")
+                                                        self.progress.progress = (level - Float(Int(level)))
+                                                        self.levelField.text = "Level " + String(Int(level)) + " \(100 * self.progress.progress) %"
+                                                        break
+                                                    }
+                                                }
+ 
+                                            }
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                                else {
+                                    self.progress.progress = 0
+                                   self.levelField.text = "Level unknown"
+                                }
                                 
                                 /*
                                 for status in arrayStatuses {
