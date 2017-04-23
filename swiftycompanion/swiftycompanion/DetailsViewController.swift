@@ -8,7 +8,11 @@
 
 import UIKit
 
-class DetailsViewController: UIViewController {
+class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+
+    @IBOutlet weak var SkillTableView: UITableView!
+    @IBOutlet weak var ProjectTableView: UITableView!
     
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var imageField: UIImageView!
@@ -21,6 +25,9 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var levelField: UILabel!
     
+    var projects : [String] = []
+    var skills : [String] = []
+    
     var login = ""
     var loginVC : ViewController?
     
@@ -31,6 +38,14 @@ class DetailsViewController: UIViewController {
         loginField.text = login
         activity.hidesWhenStopped = true
         activity.startAnimating()
+        SkillTableView.dataSource = self
+        SkillTableView.delegate = self
+        SkillTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Skills")
+        
+        ProjectTableView.dataSource = self
+        ProjectTableView.delegate = self
+        ProjectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Projects")
+        
         
         getFrom42(login)
     }
@@ -135,7 +150,23 @@ class DetailsViewController: UIViewController {
                                     self.progress.progress = 0
                                     self.levelField.text = "Level unknown"
                                 }
-                                
+                                if let projects_users = responseObject["projects_users"] as! NSArray? {
+                                    print("Debug : projects_users = \(projects_users)")
+                                    for projects_user in projects_users {
+                                        print("projects_user = \(projects_user)")
+                                        if let pro = projects_user as? [String:AnyObject] {
+                                            print("pro = \(pro)")
+                                            if let project = pro["project"] as? [String:AnyObject] {
+                                                print("project = \(project)")
+                                                if let project_name = project["name"] as? String {
+                                                    print("project_name = \(project_name)")
+                                                    self.projects.append(project_name)
+                                                 }
+                                            }
+                                        }
+
+                                    }
+                                }
                                 /*
                                  for status in arrayStatuses {
                                  let text = status["text"] as! String
@@ -159,11 +190,54 @@ class DetailsViewController: UIViewController {
                             print("Connexion lost")
                         }
                         self.activity.stopAnimating()
+                        self.ProjectTableView.reloadData()
+                        self.SkillTableView.reloadData()
                     }
                 }
             })
             task.resume()
         }
+    }
+
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // Return the number of items in the sample data structure.
+        
+        var count:Int?
+        
+        if tableView == self.ProjectTableView {
+            count = projects.count
+            print("numberOfRowsInSection pour ProjectTableView = \(String(describing: count))")
+        }
+        
+        if tableView == self.SkillTableView {
+            count =  skills.count
+            print("numberOfRowsInSection pour SkillTableView = \(String(describing: count))")
+        }
+        
+        return count!
+        
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell:UITableViewCell?
+        
+        if tableView == self.ProjectTableView {
+            print("cellForRowAt pour ProjectTableView——")
+
+            cell = tableView.dequeueReusableCell(withIdentifier: "Projects", for: indexPath as IndexPath)
+            cell?.textLabel!.text = projects[indexPath.row]
+        }
+        
+        if tableView == self.SkillTableView {
+            print("cellForRowAt pour SkillTableView")
+
+            cell = tableView.dequeueReusableCell(withIdentifier: "Skills", for: indexPath as IndexPath)
+            cell?.textLabel!.text = skills[indexPath.row]
+        }
+        
+        return cell!
     }
     
 }
