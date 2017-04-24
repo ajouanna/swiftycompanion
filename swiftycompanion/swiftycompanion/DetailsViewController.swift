@@ -8,9 +8,22 @@
 
 import UIKit
 
+class ProjectCell: UITableViewCell {
+    
+    
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var status: UILabel!
+    @IBOutlet weak var validated: UILabel!
+}
+
+class SkillCell: UITableViewCell {
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var level: UILabel!
+}
+
 class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-
+    
+    
     @IBOutlet weak var Cursus: UILabel!
     @IBOutlet weak var SkillTableView: UITableView!
     @IBOutlet weak var ProjectTableView: UITableView!
@@ -21,7 +34,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var loginField: UILabel!
     
     @IBOutlet weak var emailField: UILabel!
-
+    
     
     @IBOutlet weak var nameField: UILabel!
     
@@ -44,12 +57,9 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         activity.startAnimating()
         SkillTableView.dataSource = self
         SkillTableView.delegate = self
-        SkillTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Skills")
         
         ProjectTableView.dataSource = self
-        ProjectTableView.delegate = self
-        ProjectTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Projects")
-        
+        ProjectTableView.delegate = self        
         
         getFrom42(login)
     }
@@ -89,24 +99,22 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                 } else if let d = data {
                     DispatchQueue.main.async {
                         do {
-                            //                        if let responseObject = try JSONSerialization.jsonObject(with: d, options: []) as? [String:AnyObject],
-                            //                            let arrayStatuses = responseObject["statuses"] as? [[String:AnyObject]] {
                             if let responseObject = try JSONSerialization.jsonObject(with: d, options: []) as? [String:AnyObject] {
-                                print("responseObject: \(responseObject)")
-                                if let loginInMsg = responseObject["login"] as! String? {
+                                // print("responseObject: \(responseObject)")
+                                if let loginInMsg = responseObject["login"] as? String? {
                                     print("login trouvé : \(loginInMsg)")
                                 }
                                 else {
                                     print("Erreur ! login non trouvé")
                                     self.loginField.text = "Unknown user"
                                 }
-                                if let location = responseObject["location"] as! String? {
+                                if let location = responseObject["location"] as? String? {
                                     self.locationField.text = location
                                 }
-                                if let email = responseObject["email"] as! String? {
+                                if let email = responseObject["email"] as? String? {
                                     self.emailField.text = email
                                 }
-                                if let first_name = responseObject["first_name"] as! String? {
+                                if let first_name = responseObject["first_name"] as? String? {
                                     self.nameField.text = first_name
                                 }
                                 if let last_name = responseObject["last_name"] as! String? {
@@ -125,68 +133,71 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                     }
                                 }
                                 if let cursus_users = responseObject["cursus_users"] as! NSArray? {
-                                    print("Debug : cursus_users = \(cursus_users)")
+                                    // print("Debug : cursus_users = \(cursus_users)")
                                     let now = Date();
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = ("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                                     
                                     for cursus_user in cursus_users {
-                                        print("cursus_user = \(cursus_user)")
+                                        // print("cursus_user = \(cursus_user)")
                                         if let cur_user = cursus_user as? [String:AnyObject] {
-                                            print("cur_user = \(cur_user)")
+                                            // print("cur_user = \(cur_user)")
+                                            
+                                            // si je trouve une date de fin et qu'elle est depassee, je passe au cursus suivant
                                             if let endDateStr = cur_user["end_at"] as? String {
-                                                print("date trouvée : \(endDateStr)")
+                                                // print("date trouvée : \(endDateStr)")
                                                 let endDate = dateFormatter.date(from: endDateStr)
-                                                if endDate! >= now {
-                                                    if let level = cur_user["level"] as! Float? {
-                                                        print("level = \(level)")
-                                                        self.progress.progress = (level - Float(Int(level)))
-                                                        self.levelField.text = "Level " + String(Int(level)) + " - \(Int(100 * self.progress.progress)) %"
+                                                if endDate! < now {
+                                                    continue
+                                                }
+                                            }
+                                            
+                                            
+                                            
+                                            
+                                            if let level = cur_user["level"] as! Float? {
+                                                // print("level = \(level)")
+                                                self.progress.progress = (level - Float(Int(level)))
+                                                self.levelField.text = "Level " + String(Int(level)) + " - \(Int(100 * self.progress.progress)) %"
+                                            }
+                                            // extraire le nom du cursus
+                                            if let cursus = cur_user["cursus"] as? [String:AnyObject] {
+                                                if let cur_name = cursus["name"] as? String {
+                                                    self.Cursus.text = "Cursus : " + cur_name
+                                                }
+                                            }
+                                            // extraire les skills
+                                            if let skills = cur_user["skills"] as? [[String:AnyObject]] {
+                                                for skill in skills {
+                                                    if let skill_name = skill["name"] as? String {
+                                                        var newSkill = Skill(name: skill_name)
                                                         
-                                                        // TODO extraire le nom du cursus
-                                                        if let cursus = cur_user["cursus"] as? [String:AnyObject] {
-                                                            if let cur_name = cursus["name"] as? String {
-                                                                self.Cursus.text = cur_name
-                                                            }
+                                                        if let skill_level = skill["level"] as? Float {
+                                                            newSkill.level = skill_level
                                                         }
-                                                        // TODO : extraire les skills
-                                                        if let skills = cur_user["skills"] as? [[String:AnyObject]] {
-                                                            for skill in skills {
-                                                                if let skill_name = skill["name"] as? String {
-                                                                    var newSkill = Skill(name: skill_name)
-                                                                
-                                                                    if let skill_level = skill["level"] as? Float {
-                                                                        newSkill.level = skill_level
-                                                                    }
-                                                                    self.skills.append(newSkill)
-                                                                }
-                                                            }
-                                                        }
-                                                        
-                                                        break
+                                                        self.skills.append(newSkill)
                                                     }
                                                 }
-                                                
                                             }
+                                            
+                                            break
+                                            
+                                            
+                                            
                                         }
                                     }
-                                    
-                                    
                                 }
-                                else {
-                                    self.progress.progress = 0
-                                    self.levelField.text = "Level unknown"
-                                }
+                                
                                 if let projects_users = responseObject["projects_users"] as! NSArray? {
-                                    print("Debug : projects_users = \(projects_users)")
+                                    // print("Debug : projects_users = \(projects_users)")
                                     for projects_user in projects_users {
-                                        print("projects_user = \(projects_user)")
+                                        // print("projects_user = \(projects_user)")
                                         if let pro = projects_user as? [String:AnyObject] {
-                                            print("pro = \(pro)")
+                                            // print("pro = \(pro)")
                                             if let project = pro["project"] as? [String:AnyObject] {
-                                                print("project = \(project)")
+                                                // print("project = \(project)")
                                                 if let project_name = project["slug"] as? String {
-                                                    print("project_name = \(project_name)")
+                                                    // print("project_name = \(project_name)")
                                                     var newProj = Project(name: project_name)
                                                     
                                                     if let proj_status = pro["status"] as? String {
@@ -195,37 +206,15 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                                     if let proj_validated = pro["validated?"] as? Bool {
                                                         newProj.validated = proj_validated
                                                     }
-                                                    
-                                                    
-                                                    
-                                                    
                                                     self.projects.append(newProj)
-                                                 }
+                                                }
                                                 
                                             }
                                         }
-
+                                        
                                     }
                                 }
-                                /*
-                                 for status in arrayStatuses {
-                                 let text = status["text"] as! String
-                                 let user = status["user"]?["name"]  as! String
-                                 if let date = status["created_at"] as? String {
-                                 let dateFormatter = DateFormatter()
-                                 dateFormatter.dateFormat = "E MMM dd HH:mm:ss Z yyyy"
-                                 if let date = dateFormatter.date(from: date) {
-                                 dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-                                 let newDate = dateFormatter.string(from: date)
-                                 }
-                                 }
-                                 
-                                 print(status)
-                                 }
-                                 */
                             }
-                            // A FINIR
-                            
                         } catch _{
                             print("Connexion lost")
                         }
@@ -238,7 +227,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
             task.resume()
         }
     }
-
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of items in the sample data structure.
@@ -264,23 +253,31 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         var cell:UITableViewCell?
         
         if tableView == self.ProjectTableView {
-            print("cellForRowAt pour ProjectTableView——")
-            cell = tableView.dequeueReusableCell(withIdentifier: "Projects", for: indexPath as IndexPath)
-            var str : String = projects[indexPath.row].name + " status = " + String(projects[indexPath.row].status) + " "
-            if projects[indexPath.row].validated {
-                str += "✅"
+            print("cellForRowAt pour ProjectTableView")
+            if let cell1 : ProjectCell = tableView.dequeueReusableCell(withIdentifier: "Projects", for: indexPath as IndexPath) as? ProjectCell {
+                //var str : String = projects[indexPath.row].name + " status = " + String(projects[indexPath.row].status) + " "
+                cell1.name.text = projects[indexPath.row].name
+                if projects[indexPath.row].validated {
+                    cell1.validated.text = "✅"
+                }
+                else {
+                    cell1.validated.text = "❌"
+                }
+                cell1.status.text = projects[indexPath.row].status
+                cell = cell1
             }
-            else {
-                str += "❎"
-            }
-            cell?.textLabel!.text = str
         }
         
         if tableView == self.SkillTableView {
             print("cellForRowAt pour SkillTableView")
-
-            cell = tableView.dequeueReusableCell(withIdentifier: "Skills", for: indexPath as IndexPath)
-            cell?.textLabel!.text = skills[indexPath.row].name + " " + String(describing: skills[indexPath.row].level)
+            
+            let cell2 : SkillCell = tableView.dequeueReusableCell(withIdentifier: "Skills", for: indexPath as IndexPath) as! SkillCell
+            cell2.name.text = skills[indexPath.row].name
+            if let lev = skills[indexPath.row].level {
+                let levstr = String(Int(lev)) + " - \(Int(100 * (lev - Float(Int(lev))))) %"
+                cell2.level.text = levstr
+            }
+            cell = cell2
         }
         
         return cell!
