@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4A1980AE1EA8ECB400A451B0 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1980AD1EA8ECB400A451B0 /* DetailsViewController.swift */; };
+		4A5BF4131EAE256E006493DB /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5BF4121EAE256E006493DB /* Skill.swift */; };
+		4A5BF4151EAE25B9006493DB /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5BF4141EAE25B9006493DB /* Project.swift */; };
 		4ADBA8AB1EA651B4004854F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADBA8AA1EA651B4004854F0 /* AppDelegate.swift */; };
 		4ADBA8AD1EA651B4004854F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADBA8AC1EA651B4004854F0 /* ViewController.swift */; };
 		4ADBA8B01EA651B4004854F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4ADBA8AE1EA651B4004854F0 /* Main.storyboard */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		4A1980AD1EA8ECB400A451B0 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		4A5BF4121EAE256E006493DB /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		4A5BF4141EAE25B9006493DB /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		4ADBA8A71EA651B4004854F0 /* swiftycompanion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = swiftycompanion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ADBA8AA1EA651B4004854F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4ADBA8AC1EA651B4004854F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +110,8 @@
 				4ADBA8D81EA652E9004854F0 /* Launch Screen.storyboard */,
 				4ADBA8B61EA651B4004854F0 /* Info.plist */,
 				4A1980AD1EA8ECB400A451B0 /* DetailsViewController.swift */,
+				4A5BF4121EAE256E006493DB /* Skill.swift */,
+				4A5BF4141EAE25B9006493DB /* Project.swift */,
 			);
 			path = swiftycompanion;
 			sourceTree = "<group>";
@@ -264,7 +270,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ADBA8AD1EA651B4004854F0 /* ViewController.swift in Sources */,
+				4A5BF4131EAE256E006493DB /* Skill.swift in Sources */,
 				4ADBA8AB1EA651B4004854F0 /* AppDelegate.swift in Sources */,
+				4A5BF4151EAE25B9006493DB /* Project.swift in Sources */,
 				4A1980AE1EA8ECB400A451B0 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

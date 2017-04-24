@@ -11,22 +11,26 @@ import UIKit
 class DetailsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
 
+    @IBOutlet weak var Cursus: UILabel!
     @IBOutlet weak var SkillTableView: UITableView!
     @IBOutlet weak var ProjectTableView: UITableView!
     
+    @IBOutlet weak var locationField: UILabel!
     @IBOutlet weak var activity: UIActivityIndicatorView!
     @IBOutlet weak var imageField: UIImageView!
     @IBOutlet weak var loginField: UILabel!
     
     @IBOutlet weak var emailField: UILabel!
-    @IBOutlet weak var firstNameField: UILabel!
-    @IBOutlet weak var lastNameField: UILabel!
+
+    
+    @IBOutlet weak var nameField: UILabel!
+    
     @IBOutlet weak var phoneField: UILabel!
     @IBOutlet weak var progress: UIProgressView!
     @IBOutlet weak var levelField: UILabel!
     
-    var projects : [String] = []
-    var skills : [String] = []
+    var projects : [Project] = []
+    var skills : [Skill] = []
     
     var login = ""
     var loginVC : ViewController?
@@ -96,17 +100,19 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                     print("Erreur ! login non trouvé")
                                     self.loginField.text = "Unknown user"
                                 }
-                                
+                                if let location = responseObject["location"] as! String? {
+                                    self.locationField.text = location
+                                }
                                 if let email = responseObject["email"] as! String? {
                                     self.emailField.text = email
                                 }
                                 if let first_name = responseObject["first_name"] as! String? {
-                                    self.firstNameField.text = first_name
+                                    self.nameField.text = first_name
                                 }
                                 if let last_name = responseObject["last_name"] as! String? {
-                                    self.lastNameField.text = last_name
+                                    self.nameField.text = self.nameField.text! + " " + last_name
                                 }
-                                if let phone = responseObject["phone"] as! String? {
+                                if let phone = responseObject["phone"] as? String? {
                                     self.phoneField.text = phone
                                 }
                                 if let image_url = responseObject["image_url"] as! String? {
@@ -124,18 +130,39 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = ("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
                                     
-                                    for cursus in cursus_users {
-                                        print("cursus = \(cursus)")
-                                        if let cur = cursus as? [String:AnyObject] {
-                                            print("cur = \(cur)")
-                                            if let endDateStr = cur["end_at"] as? String {
+                                    for cursus_user in cursus_users {
+                                        print("cursus_user = \(cursus_user)")
+                                        if let cur_user = cursus_user as? [String:AnyObject] {
+                                            print("cur_user = \(cur_user)")
+                                            if let endDateStr = cur_user["end_at"] as? String {
                                                 print("date trouvée : \(endDateStr)")
                                                 let endDate = dateFormatter.date(from: endDateStr)
                                                 if endDate! >= now {
-                                                    if let level = cur["level"] as! Float? {
+                                                    if let level = cur_user["level"] as! Float? {
                                                         print("level = \(level)")
                                                         self.progress.progress = (level - Float(Int(level)))
                                                         self.levelField.text = "Level " + String(Int(level)) + " - \(Int(100 * self.progress.progress)) %"
+                                                        
+                                                        // TODO extraire le nom du cursus
+                                                        if let cursus = cur_user["cursus"] as? [String:AnyObject] {
+                                                            if let cur_name = cursus["name"] as? String {
+                                                                self.Cursus.text = cur_name
+                                                            }
+                                                        }
+                                                        // TODO : extraire les skills
+                                                        if let skills = cur_user["skills"] as? [[String:AnyObject]] {
+                                                            for skill in skills {
+                                                                if let skill_name = skill["name"] as? String {
+                                                                    var newSkill = Skill(name: skill_name)
+                                                                
+                                                                    if let skill_level = skill["level"] as? Float {
+                                                                        newSkill.level = skill_level
+                                                                    }
+                                                                    self.skills.append(newSkill)
+                                                                }
+                                                            }
+                                                        }
+                                                        
                                                         break
                                                     }
                                                 }
@@ -158,10 +185,23 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                             print("pro = \(pro)")
                                             if let project = pro["project"] as? [String:AnyObject] {
                                                 print("project = \(project)")
-                                                if let project_name = project["name"] as? String {
+                                                if let project_name = project["slug"] as? String {
                                                     print("project_name = \(project_name)")
-                                                    self.projects.append(project_name)
+                                                    var newProj = Project(name: project_name)
+                                                    
+                                                    if let proj_status = pro["status"] as? String {
+                                                        newProj.status = proj_status
+                                                    }
+                                                    if let proj_validated = pro["validated?"] as? Bool {
+                                                        newProj.validated = proj_validated
+                                                    }
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    self.projects.append(newProj)
                                                  }
+                                                
                                             }
                                         }
 
@@ -225,16 +265,22 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         
         if tableView == self.ProjectTableView {
             print("cellForRowAt pour ProjectTableView——")
-
             cell = tableView.dequeueReusableCell(withIdentifier: "Projects", for: indexPath as IndexPath)
-            cell?.textLabel!.text = projects[indexPath.row]
+            var str : String = projects[indexPath.row].name + " status = " + String(projects[indexPath.row].status) + " "
+            if projects[indexPath.row].validated {
+                str += "✅"
+            }
+            else {
+                str += "❎"
+            }
+            cell?.textLabel!.text = str
         }
         
         if tableView == self.SkillTableView {
             print("cellForRowAt pour SkillTableView")
 
             cell = tableView.dequeueReusableCell(withIdentifier: "Skills", for: indexPath as IndexPath)
-            cell?.textLabel!.text = skills[indexPath.row]
+            cell?.textLabel!.text = skills[indexPath.row].name + " " + String(describing: skills[indexPath.row].level)
         }
         
         return cell!
