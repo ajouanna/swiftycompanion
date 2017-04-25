@@ -102,7 +102,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                             if let responseObject = try JSONSerialization.jsonObject(with: d, options: []) as? [String:AnyObject] {
                                 // print("responseObject: \(responseObject)")
                                 if let loginInMsg = responseObject["login"] as? String? {
-                                    print("login trouvé : \(loginInMsg)")
+                                    print("login trouvé : \(String(describing: loginInMsg))")
                                 }
                                 else {
                                     print("Erreur ! login non trouvé")
