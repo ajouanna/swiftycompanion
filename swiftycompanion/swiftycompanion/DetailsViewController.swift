@@ -163,7 +163,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                             // extraire le nom du cursus
                                             if let cursus = cur_user["cursus"] as? [String:AnyObject] {
                                                 if let cur_name = cursus["name"] as? String {
-                                                    self.Cursus.text = "Cursus : " + cur_name
+                                                    self.Cursus.text = cur_name
                                                 }
                                             }
                                             // extraire les skills
