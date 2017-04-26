@@ -1,0 +1,57 @@
+/* Class = "UILabel"; text = "Label"; ObjectID = "6zQ-EW-Lx7"; */
+"6zQ-EW-Lx7.text" = "Label";
+
+/* Class = "UILabel"; text = "Location unknown"; ObjectID = "33h-fN-E1U"; */
+"33h-fN-E1U.text" = "Lieu inconnu";
+
+/* Class = "UILabel"; text = "Validated"; ObjectID = "AKA-Ru-LBk"; */
+"AKA-Ru-LBk.text" = "Validé";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "EGp-3b-Dwa"; */
+"EGp-3b-Dwa.text" = "Label";
+
+/* Class = "UILabel"; text = "Name unknown"; ObjectID = "Kig-bk-XUF"; */
+"Kig-bk-XUF.text" = "Nom inconnu";
+
+/* Class = "UILabel"; text = "Login unknown"; ObjectID = "Mx9-69-FqF"; */
+"Mx9-69-FqF.text" = "Identifiant inconnu";
+
+/* Class = "UILabel"; text = "Cursus unknown"; ObjectID = "TtT-XK-zDy"; */
+"TtT-XK-zDy.text" = "Cursus inconnu";
+
+/* Class = "UILabel"; text = "Phone unknown"; ObjectID = "VWy-ef-9Hh"; */
+"VWy-ef-9Hh.text" = "Téléphone inconnu";
+
+/* Class = "UILabel"; text = "Level unknown"; ObjectID = "VaP-2p-kqy"; */
+"VaP-2p-kqy.text" = "Niveau inconnu";
+
+/* Class = "UITextField"; placeholder = "enter login"; ObjectID = "X1w-Ru-P0o"; */
+"X1w-Ru-P0o.placeholder" = "Saisir identifiant";
+
+/* Class = "UILabel"; text = "Level"; ObjectID = "b1S-Fn-sXc"; */
+"b1S-Fn-sXc.text" = "Niveau";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cnK-ib-X5V"; */
+"cnK-ib-X5V.text" = "Label";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cqS-Of-sUn"; */
+"cqS-Of-sUn.text" = "Label";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "gJX-6N-wfW"; */
+"gJX-6N-wfW.text" = "Nom";
+
+/* Class = "UILabel"; text = "Status"; ObjectID = "gq4-3n-vi6"; */
+"gq4-3n-vi6.text" = "Statut";
+
+/* Class = "UILabel"; text = "Welcome to Ecole 42"; ObjectID = "grq-rR-1b5"; */
+"grq-rR-1b5.text" = "Bienvenue à l’Ecole 42";
+
+/* Class = "UILabel"; text = "Email unknown"; ObjectID = "shy-L0-R5x"; */
+"shy-L0-R5x.text" = "Email inconnu";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "tcW-Go-C4b"; */
+"tcW-Go-C4b.text" = "Nom";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "vQ6-63-dxg"; */
+"vQ6-63-dxg.text" = "Label";
+

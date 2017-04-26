@@ -106,7 +106,7 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                 }
                                 else {
                                     print("Erreur ! login non trouvé")
-                                    self.loginField.text = "Unknown user"
+                                    self.loginField.text = NSLocalizedString("Unknown user", comment: "Error case when login field is not found in data")
                                 }
                                 if let location = responseObject["location"] as? String? {
                                     self.locationField.text = location
@@ -151,9 +151,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
                                                     continue
                                                 }
                                             }
-                                            
-                                            
-                                            
                                             
                                             if let level = cur_user["level"] as! Float? {
                                                 // print("level = \(level)")
@@ -255,7 +252,6 @@ class DetailsViewController: UIViewController, UITableViewDataSource, UITableVie
         if tableView == self.ProjectTableView {
             print("cellForRowAt pour ProjectTableView")
             if let cell1 : ProjectCell = tableView.dequeueReusableCell(withIdentifier: "Projects", for: indexPath as IndexPath) as? ProjectCell {
-                //var str : String = projects[indexPath.row].name + " status = " + String(projects[indexPath.row].status) + " "
                 cell1.name.text = projects[indexPath.row].name
                 if projects[indexPath.row].validated {
                     cell1.validated.text = "✅"

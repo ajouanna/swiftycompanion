@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         initToken()
         loginField.isHidden = true
         searchButton.isEnabled = false
-        errorLabel.text = "Waiting for token from server..."
+        errorLabel.text = NSLocalizedString("Waiting for token from server...", comment: "informational message")
         activityController.hidesWhenStopped = true
         activityController.startAnimating()
     }
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
                 self.activityController.stopAnimating()
                 guard let data = data, error == nil else {
                     print(error!)
-                    self.errorLabel.text = "Fatal error : can't connect to API server"
+                    self.errorLabel.text = NSLocalizedString("Fatal error : can't connect to API server", comment: "Error message")
                     return
                 }
                 do {
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
                         print(dic)
                         self.token = (dic["access_token"] as? String)!
                         print("token recupéré de 42 : \(String(describing: self.token))")
-                        self.errorLabel.text = "Ready for input"
+                        self.errorLabel.text = NSLocalizedString("Ready for input", comment: "Information message")
                         self.loginField.isHidden = false
                         self.searchButton.isEnabled = true
                     }

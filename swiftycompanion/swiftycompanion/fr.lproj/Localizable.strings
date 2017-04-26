@@ -1,0 +1,12 @@
+/* Error message */
+"Fatal error : can't connect to API server" = "Erreur fatale : impossible de se connecter à l’API";
+
+/* Information message */
+"Ready for input" = "Prêt pour saisie";
+
+/* Error case when login field is not found in data */
+"Unknown user" = "Utilisateur inconnu";
+
+/* informational message */
+"Waiting for token from server..." = "En attente de jeton du serveur";
+
